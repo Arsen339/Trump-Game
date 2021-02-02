@@ -1,5 +1,7 @@
-#Setting up the module
+#Adding modules
 import pygame
+import random
+import math
 pygame.init()
 
 #Setting the display
@@ -10,9 +12,11 @@ pygame.display.set_caption("Cubes game")
 clock = pygame.time.Clock()
 x = 50
 y = 425
+#player's size and speed
 width = 60
 height = 71
-speed = 5
+speed = 7
+
 isJump = False
 JumpCount = 10
 left = False
@@ -20,9 +24,9 @@ right = False
 animCount = 0
 lastMove = "right"
 
-
-MaxBullet=3
-
+#Maximum allowed bullets and enemies
+MaxBullet = 2
+MaxEnemies = 5
 
 #Uploading pictures in array
 walkRight=[pygame.image.load("pygame_right_1.png"), pygame.image.load("pygame_right_2.png"),
@@ -37,8 +41,11 @@ playerStand = pygame.image.load("pygame_idle.png")
 
 bg = pygame.image.load("bg.jpg")
 
+#arrays for bullets and enemies
 bullets = []
+dangers = []
 
+#class for bullets
 class snaryad():
     def __init__(self, x, y, radius, color, facing):
         self.x = x
@@ -52,6 +59,18 @@ class snaryad():
         pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
 
 
+#class for enemies
+class enemy():
+    def __init__(self, x, y, radius, speed, color, facing):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.color = color
+        self.speed = speed
+        self.facing = facing
+    #drawing enemy in window
+    def DrawEnemy(self, win):
+        pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
 
 
 
@@ -79,12 +98,44 @@ def drawWindow():
         win.blit(playerStand, (x , y))
     for bullet in bullets:
         bullet.draw(win)
+    for danger in dangers:
+        danger.DrawEnemy(win)
 
     pygame.display.update()
     
     
+ #Function creates and deletes anemies   
+def EnemySetting():
+    global dangers
+    global bullets
+    global run
+    ChoiceAbility = [0,1,2,3,4,5,6,7,8,9,10]
+    EnemyRadius = random.choice([35, 30])
+    EnemySpeed = random.choice([1,2,3])
+    # adds an enemie
+    if random.choice(ChoiceAbility) == 9 and len(dangers) < MaxEnemies:
+        dangers.append(enemy(0, 500-EnemyRadius, EnemyRadius, EnemySpeed, (255,100,180), 1))
+    elif random.choice(ChoiceAbility) == 10 and len(dangers) < MaxEnemies:
+        dangers.append(enemy(500, 500-EnemyRadius, EnemyRadius, - EnemySpeed, (0,255,0), -1))
+    #moving and deleting enemies
+    if len(dangers) >=1:  
+        for danger in dangers: 
+            if danger.x < 500 and danger.facing == 1:
+                danger.x += danger.speed
+            elif danger.x > 0 and danger.facing == -1:
+                danger.x += danger.speed
+            else:
+                dangers.pop(dangers.index(danger))
+    # killing enemies            
+    if len(bullets) >=1:           
+        for bullet in bullets:
+            for danger in dangers:
+                if math.fabs(bullet.x-danger.x) <5:
+                    dangers.pop(dangers.index(danger))
+                    bullets.pop(bullets.index(bullet))
 
-
+    
+        
 
 
 run  = True
@@ -96,19 +147,20 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-
+    
+    #bullets move
     for bullet in bullets:
         if bullet.x < 500 and bullet.x > 0:
             bullet.x += bullet.vel
         else:
             bullets.pop(bullets.index(bullet))
 
+    
 
-
-    #Creating the character
-   
+    
     
     #KeyPad
+    #Shooting
     keys = pygame.key.get_pressed()
     if keys[pygame.K_f]:
         if lastMove == "right":
@@ -118,6 +170,7 @@ while run:
         if len(bullets) < MaxBullet:
             bullets.append(snaryad(round(x + width // 2), round(y + height // 2), 5,(255,0,0),facing))
         
+    #moving
     if keys[pygame.K_LEFT] and x > 5:
         x -= speed
         left = True
@@ -150,6 +203,7 @@ while run:
             isJump = False
             JumpCount = 10
     
+    EnemySetting()
     drawWindow()
     
 
