@@ -2,6 +2,8 @@
 import pygame
 import random
 import math
+
+
 pygame.init()
 
 #Setting the display
@@ -21,7 +23,7 @@ animCount = 0
 
 
 #Maximum allowed bullets and enemies
-MaxBullet = 2
+MaxBullet = 1
 MaxEnemies = 5
 
 #Uploading pictures in array
@@ -81,7 +83,7 @@ class Gamer():
         self.InAirNow = InAirNow
         self.HeightCount = HeightCount
 #Start values
-Trump=Gamer(50, 425, False, False, "right", 7, False, 10)
+Trump=Gamer(50, 429, False, False, "right", 7, False, 10)
 
 
 
@@ -137,11 +139,11 @@ def EnemySetting():
     if len(bullets) >=1:           
         for bullet in bullets:
             for danger in dangers:
-                if math.fabs(bullet.x-danger.x) <5:
+                if abs(bullet.x-danger.x) <5 and abs(bullet.y-danger.y) < 35:
                     dangers.pop(dangers.index(danger))
-                    #bullets.pop(bullets.index(bullet))
+                    bullets.pop(bullets.index(bullet))
         
-
+#Fun for player Moving
 def PlayerMoving():
     global animCount
     keys = pygame.key.get_pressed()
@@ -160,7 +162,7 @@ def PlayerMoving():
         Trump.RightFacing = False
         animCount = 0
 
-
+#Fun for jump
 def PlayerJumping():
     keys = pygame.key.get_pressed()
     if not(Trump.InAirNow):
@@ -179,6 +181,7 @@ def PlayerJumping():
             Trump.InAirNow = False
             Trump.HeightCount = 10
     
+#Fun for bullet    
 def BulletMove():
     global bullets
     for bullet in bullets:
@@ -196,12 +199,20 @@ def BulletMove():
             bullets.append(snaryad(round(Trump.XPos + width // 2), round(Trump.YPos + height // 2), 5,(255,0,0), facing))
 
 
+#Fun for Losing
+def Losing():
+    global dangers
+    global run
+    for danger in dangers:
+        if abs(Trump.XPos-danger.x) < danger.radius-10  and abs(Trump.YPos-danger.y) < danger.radius * 2:
 
-
+            run = False
+            
 
 
 
 run  = True
+
 while run:
     clock.tick(30)
     #Repeating in MS
@@ -210,11 +221,15 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+
+
+    
     BulletMove()
     PlayerJumping()
     PlayerMoving()
     EnemySetting()
     drawWindow()
+    Losing()
     
 
 pygame.quit()
