@@ -17,7 +17,9 @@ clock = pygame.time.Clock()
 width = 60
 height = 71
 
-
+#Lives and kills counter
+PointCounter = 0
+LiveCounter = 100
 
 animCount = 0
 
@@ -89,6 +91,8 @@ Trump=Gamer(50, 429, False, False, "right", 7, False, 10)
 
 #Update window fun
 def drawWindow():
+    global PointCounter
+    global LiveCounter
     #WindowSet
     win.blit(bg, (0, 0))
     #pygame.draw.rect(win, (0,0,255), (x, y, width, height))- draws rectangle instead of player
@@ -110,12 +114,21 @@ def drawWindow():
         bullet.draw(win)
     for danger in dangers:
         danger.DrawEnemy(win)
+    print_text("TRUMP GAME!", 100, 100)
+
+    ScoreSkill = ("Points: " + str(PointCounter))
+
+    print_text(ScoreSkill, 100, 50)
+
+    LiveSkill = ("Lives: " + str(LiveCounter))    
+    print_text(LiveSkill, 100, 20)
 
     pygame.display.update()
     
     
  #Function creates and deletes anemies   
 def EnemySetting():
+    global PointCounter
     global dangers
     global bullets
     ChoiceAbility = [0,1,2,3,4,5,6,7,8,9,10]
@@ -139,7 +152,8 @@ def EnemySetting():
     if len(bullets) >=1:           
         for bullet in bullets:
             for danger in dangers:
-                if abs(bullet.x-danger.x) <5 and abs(bullet.y-danger.y) < 35:
+                if abs(bullet.x-danger.x) <5 and abs(bullet.y-danger.y) < 45:
+                    PointCounter +=1
                     dangers.pop(dangers.index(danger))
                     bullets.pop(bullets.index(bullet))
         
@@ -203,14 +217,50 @@ def BulletMove():
 def Losing():
     global dangers
     global run
+    global LiveCounter
     for danger in dangers:
-        if abs(Trump.XPos-danger.x) < danger.radius-10  and abs(Trump.YPos-danger.y) < danger.radius * 2:
+        if abs(Trump.XPos-danger.x) < danger.radius-5  and abs(Trump.YPos-danger.y) < danger.radius * 2:
+            LiveCounter -= 1
+            if LiveCounter <=0:
+                run = False
 
-            run = False
-            
+ #Function for printing text on the screen           
+def print_text(message, x, y, font_color = (0,0,0), font_type = 'BantyBold.ttf', font_size = 30):
+    font_type=pygame.font.Font(font_type, font_size)
+    text=font_type.render(message, True, font_color)
+    win.blit(text, (x,y))
+    
 
 
 
+#Function for pause
+def pause():
+    global run
+    keys = pygame.key.get_pressed()
+    paused = True
+    if keys[pygame.K_w]:
+        while paused:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    quit()
+
+
+
+            print_text('pause. Press S to continue', 50, 50)
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_s]:
+                paused = False
+            pygame.display.update()
+            clock.tick(15)
+
+
+
+
+
+
+
+#Main
 run  = True
 
 while run:
@@ -221,9 +271,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-
-
-    
+    pause()
     BulletMove()
     PlayerJumping()
     PlayerMoving()
