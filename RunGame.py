@@ -9,6 +9,7 @@ from Parametrs import *
 from Images import *
 from Snaryad import *
 from Sound import *
+from ButtonClass import *
 
 #Initializing pygame
 pygame.init()
@@ -37,8 +38,10 @@ while run:
     NewGame.EnemySetting()
     NewGame.drawWindow()
     NewGame.Losing()
+    NewBut = Button(80, 80)
+    NewBut.draw(400, 20, " ") 
+    NewBut.print_but_mes(400, 20)
     
-
 pygame.quit()
 
 
