@@ -7,6 +7,19 @@ from Images import *
 from Enemy import *
 from Snaryad import *
 from Sound import * 
+from FileWorkClass import *
+
+#Saving games
+
+
+
+
+
+
+
+
+
+
 
 class FunRunner():
     def __init__(self, flag):
@@ -37,11 +50,11 @@ class FunRunner():
             danger.DrawEnemy(win)
         self.print_text("TRUMP GAME!", 100, 100)
 
-        ScoreSkill = ("Points: " + str(pr.PointCounter))
+        ScoreSkill = ("Points: " + str(Stats.PointCounter))
 
         self.print_text(ScoreSkill, 100, 50)
 
-        LiveSkill = ("Lives: " + str(pr.LiveCounter))    
+        LiveSkill = ("Lives: " + str(Stats.LiveCounter))    
         self.print_text(LiveSkill, 100, 20)
 
         pygame.display.update()
@@ -49,8 +62,6 @@ class FunRunner():
         
     #Function creates and deletes anemies   
     def EnemySetting(self):
-        
-        
         ChoiceAbility = [0,1,2,3,4,5,6,7,8,9,10]
         EnemyRadius = random.choice([35, 39])
         EnemySpeed = random.choice([1,2,3])
@@ -73,18 +84,17 @@ class FunRunner():
             for bullet in pr.bullets.copy():
                 for danger in pr.dangers.copy():
                     if abs(bullet.x-danger.x) <5 and abs(bullet.y-danger.y) < 45:
-                        pr.PointCounter +=1
+                            Stats.PointCounter +=1
                         #We check copies to avoid memory mistakes
-                        pr.dangers.pop(pr.dangers.index(danger))
-                        pygame.mixer.Sound.play(SS)
-                        bullet.x = 0
-                        bullet.y = 0
-                        pr.bullets.remove(bullet)
+                            pr.dangers.pop(pr.dangers.index(danger))
+                            pygame.mixer.Sound.play(SS)
+                            bullet.x = 0
+                            bullet.y = 0
+                            pr.bullets.remove(bullet)
                         
             
     #Fun for player Moving
     def PlayerMoving(self):
-      
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and Trump.XPos > 5:
             Trump.XPos -= Trump.GamerSpeed
@@ -122,7 +132,6 @@ class FunRunner():
         
     #Fun for bullet    
     def BulletMove(self):
-        
         for bullet in pr.bullets.copy():
             if bullet.x < 500 and bullet.x > 0:
                 bullet.x += bullet.vel
@@ -140,13 +149,10 @@ class FunRunner():
 
     #Fun for Losing
     def Losing(self):
-        
-        
-        
         for danger in pr.dangers:
             if abs(Trump.XPos-danger.x) < danger.radius+5  and abs(Trump.YPos-danger.y) < danger.radius * 2:
-                pr.LiveCounter -= 1
-                if pr.LiveCounter <=0:
+                Stats.LiveCounter -= 1
+                if Stats.LiveCounter <=0:
                     pr.run = False
                     quit()
 
@@ -158,6 +164,39 @@ class FunRunner():
         
 
 
+    def SaveData(self,LiveCounterLocal, PointCounterLocal):
+        
+            if Stats.SaveFlag==1:
+                
+                
+
+                NewData=['']*3
+                NewData[2]=str(PointCounterLocal)
+                NewData[1]="\n"
+                NewData[0]=str(LiveCounterLocal)
+               
+
+                f = open('saves.txt', 'w')
+                f.writelines(NewData)
+                f.close()
+
+            if Stats.SaveFlag==2:
+                NewData=['']*3
+                NewData[0]="100"
+                NewData[1]="\n"
+                NewData[2]="0"
+               
+
+                f = open('saves.txt', 'w')
+                f.writelines(NewData)
+                f.close()
+            Stats.SaveFlag = 0
+
+
+
+
+
+
 
     #Function for pause
     def pause(self):
@@ -165,6 +204,10 @@ class FunRunner():
         keys = pygame.key.get_pressed()
         paused = True
         if keys[pygame.K_w]:
+               
+            
+            
+            Stats.SaveFlag = 1
             while paused:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -172,14 +215,25 @@ class FunRunner():
                         quit()
 
 
-
+           
                 self.print_text('pause. Press S to continue', 150, 150)
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_s]:
                     paused = False
+                    
                 pygame.display.update()
-                clock.tick(15)
-    #Adds Player's health            
+                #clock.tick(15)
+              
     
 
-
+    def RestartGame(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_r]:
+            Stats.SaveFlag=2
+            Trump.XPos=50
+            Trump.Ypos=429
+            Stats.PointCounter=0
+            Stats.LiveCounter=100
+            for danger in pr.dangers.copy():
+                pr.dangers.pop(pr.dangers.index(danger))
+                

@@ -10,6 +10,7 @@ from Images import *
 from Snaryad import *
 from Sound import *
 from ButtonClass import *
+from FileWorkClass import *
 
 #Initializing pygame
 pygame.init()
@@ -41,7 +42,8 @@ while run:
     NewBut = Button(80, 80)
     NewBut.draw(400, 20, " ") 
     NewBut.print_but_mes(400, 20)
-    
+    NewGame.SaveData(Stats.LiveCounter, Stats.PointCounter)
+    NewGame.RestartGame()
 pygame.quit()
 
 
