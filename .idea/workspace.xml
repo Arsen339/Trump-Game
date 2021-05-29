@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d15c6a28-9eee-4649-bd49-9823975242fe" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ButtonClass.py" beforeDir="false" afterPath="$PROJECT_DIR$/ButtonClass.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileWorkClass.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileWorkClass.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GamePlayFuns.py" beforeDir="false" afterPath="$PROJECT_DIR$/GamePlayFuns.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gamer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gamer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Images.py" beforeDir="false" afterPath="$PROJECT_DIR$/Images.py" afterDir="false" />
@@ -90,5 +92,16 @@
       <updated>1622285668555</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

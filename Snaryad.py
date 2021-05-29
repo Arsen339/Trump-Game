@@ -1,8 +1,8 @@
 from Parametrs import win
 import pygame
 
-#class for bullets
-class snaryad():
+class Snaryad:
+    """class for bullets """
     def __init__(self, x, y, radius, color, facing):
         self.x = x
         self.y = y
@@ -10,6 +10,7 @@ class snaryad():
         self.color = color
         self.facing = facing
         self.vel = 8*facing
-    #drawing bullets in window
+
     def draw(self, win):
+        """Drawing bullets in window """
         pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
