@@ -13,8 +13,8 @@ width = 60
 height = 71
 
 #Lives and kills counter
-PointCounter = 0
-LiveCounter = 100
+#PointCounter = 0
+#LiveCounter = 100
 
 animCount = 0
 
@@ -28,4 +28,6 @@ MaxEnemies = 4
 #arrays for bullets and enemies
 bullets = []
 dangers = []
+
+
 

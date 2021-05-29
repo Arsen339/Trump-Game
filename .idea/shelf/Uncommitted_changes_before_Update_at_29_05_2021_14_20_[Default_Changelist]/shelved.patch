@@ -1,0 +1,703 @@
+Index: RunGame.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Adding modules\r\nimport pygame\r\nimport random\r\nimport math\r\nfrom Enemy import *\r\nfrom GamePlayFuns import *\r\nfrom Gamer import *\r\nfrom Parametrs import *\r\nfrom Images import *\r\nfrom Snaryad import *\r\nfrom Sound import *\r\nfrom ButtonClass import *\r\n\r\n#Initializing pygame\r\npygame.init()\r\n\r\n\r\n#Main\r\nrun  = True\r\n\r\n#creating FunRunner class\r\nNewGame = FunRunner(1)\r\n\r\n\r\nwhile run:\r\n    clock.tick(30)\r\n    #Repeating in MS\r\n    pygame.time.delay(50)\r\n    #Out when close\r\n    for event in pygame.event.get():\r\n        if event.type == pygame.QUIT:\r\n            run = False\r\n\r\n    NewGame.pause()\r\n    NewGame.BulletMove()\r\n    NewGame.PlayerJumping()\r\n    NewGame.PlayerMoving()\r\n    NewGame.EnemySetting()\r\n    NewGame.drawWindow()\r\n    NewGame.Losing()\r\n    NewBut = Button(80, 80)\r\n    NewBut.draw(400, 20, \" \") \r\n    NewBut.print_but_mes(400, 20)\r\n    \r\npygame.quit()\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RunGame.py b/RunGame.py
+--- a/RunGame.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/RunGame.py	(date 1622286767544)
+@@ -1,4 +1,4 @@
+-#Adding modules
++# Adding modules
+ import pygame
+ import random
+ import math
+@@ -11,33 +11,33 @@
+ from Sound import *
+ from ButtonClass import *
+ 
+-#Initializing pygame
++# Initializing pygame
+ pygame.init()
+ 
+ 
+-#Main
+-run  = True
++# Main
++run = True
+ 
+-#creating FunRunner class
++# creating FunRunner class
+ NewGame = FunRunner(1)
+ 
+ 
+ while run:
+     clock.tick(30)
+-    #Repeating in MS
++    # Repeating in MS
+     pygame.time.delay(50)
+-    #Out when close
++    # Out when close
+     for event in pygame.event.get():
+         if event.type == pygame.QUIT:
+             run = False
+ 
+     NewGame.pause()
+-    NewGame.BulletMove()
+-    NewGame.PlayerJumping()
+-    NewGame.PlayerMoving()
+-    NewGame.EnemySetting()
+-    NewGame.drawWindow()
+-    NewGame.Losing()
++    NewGame.bullet_move()
++    NewGame.player_jumping()
++    NewGame.player_moving()
++    NewGame.enemy_setting()
++    NewGame.draw_window()
++    NewGame.losing()
+     NewBut = Button(80, 80)
+     NewBut.draw(400, 20, " ") 
+     NewBut.print_but_mes(400, 20)
+Index: Sound.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\npygame.init()\r\n\r\n#Loading music\r\nSS=pygame.mixer.Sound('BOM.mp3')\r\npygame.mixer.music.set_volume(0.7)\r\n\r\nBS=pygame.mixer.Sound('ButtonSound.mp3')\r\npygame.mixer.music.set_volume(0.7)\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Sound.py b/Sound.py
+--- a/Sound.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/Sound.py	(date 1622286767535)
+@@ -1,10 +1,9 @@
+ import pygame
+ pygame.init()
+ 
+-#Loading music
+-SS=pygame.mixer.Sound('BOM.mp3')
++# Loading music
++SS = pygame.mixer.Sound('BOM.mp3')
+ pygame.mixer.music.set_volume(0.7)
+ 
+-BS=pygame.mixer.Sound('ButtonSound.mp3')
+-pygame.mixer.music.set_volume(0.7)
+-
++BS = pygame.mixer.Sound('ButtonSound.mp3')
++pygame.mixer.music.set_volume(0.7)
+\ No newline at end of file
+Index: Images.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\nimport pygame\r\npygame.init()\r\n#Uploading pictures of sprites in array\r\nwalkRight=[pygame.image.load(\"pictures/pygame_right_1.png\"), pygame.image.load(\"pictures/pygame_right_2.png\"),\r\npygame.image.load(\"pictures/pygame_right_3.png\"), pygame.image.load(\"pictures/pygame_right_4.png\"),\r\npygame.image.load(\"pictures/pygame_right_5.png\"), pygame.image.load(\"pictures/pygame_right_6.png\")]\r\n\r\nwalkLeft=[pygame.image.load(\"pictures/pygame_left_1.png\"), pygame.image.load(\"pictures/pygame_left_2.png\"),\r\npygame.image.load(\"pictures/pygame_left_3.png\"), pygame.image.load(\"pictures/pygame_left_4.png\"),\r\npygame.image.load(\"pictures/pygame_left_5.png\"), pygame.image.load(\"pictures/pygame_left_6.png\")]\r\n\r\n\r\n#Loading default player's stand\r\nplayerStand = pygame.image.load(\"pictures/pygame_idle.png\")\r\n\r\n#Loading screenWallPaper\r\nbg = pygame.image.load(\"pictures/bg.jpg\")
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Images.py b/Images.py
+--- a/Images.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/Images.py	(date 1622286767562)
+@@ -1,18 +1,18 @@
+ 
+ import pygame
+ pygame.init()
+-#Uploading pictures of sprites in array
+-walkRight=[pygame.image.load("pictures/pygame_right_1.png"), pygame.image.load("pictures/pygame_right_2.png"),
++# Uploading pictures of sprites in array
++walkRight = [pygame.image.load("pictures/pygame_right_1.png"), pygame.image.load("pictures/pygame_right_2.png"),
+ pygame.image.load("pictures/pygame_right_3.png"), pygame.image.load("pictures/pygame_right_4.png"),
+ pygame.image.load("pictures/pygame_right_5.png"), pygame.image.load("pictures/pygame_right_6.png")]
+ 
+-walkLeft=[pygame.image.load("pictures/pygame_left_1.png"), pygame.image.load("pictures/pygame_left_2.png"),
++walkLeft = [pygame.image.load("pictures/pygame_left_1.png"), pygame.image.load("pictures/pygame_left_2.png"),
+ pygame.image.load("pictures/pygame_left_3.png"), pygame.image.load("pictures/pygame_left_4.png"),
+ pygame.image.load("pictures/pygame_left_5.png"), pygame.image.load("pictures/pygame_left_6.png")]
+ 
+ 
+-#Loading default player's stand
++# Loading default player's stand
+ playerStand = pygame.image.load("pictures/pygame_idle.png")
+ 
+-#Loading screenWallPaper
++# Loading screenWallPaper
+ bg = pygame.image.load("pictures/bg.jpg")
+\ No newline at end of file
+Index: Enemy.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from Parametrs import win\r\nimport pygame\r\n# class for enemies\r\nclass enemy():\r\n    def __init__(self, x, y, radius, speed, color, facing):\r\n        self.x = x\r\n        self.y = y\r\n        self.radius = radius\r\n        self.color = color\r\n        self.speed = speed\r\n        self.facing = facing\r\n    #drawing enemy in window\r\n    def DrawEnemy(self, win):\r\n        pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Enemy.py b/Enemy.py
+--- a/Enemy.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/Enemy.py	(date 1622286267640)
+@@ -1,7 +1,11 @@
+ from Parametrs import win
+ import pygame
++
++
+ # class for enemies
+-class enemy():
++class Enemy:
++    """Enemy Class"""
++
+     def __init__(self, x, y, radius, speed, color, facing):
+         self.x = x
+         self.y = y
+@@ -9,6 +13,8 @@
+         self.color = color
+         self.speed = speed
+         self.facing = facing
+-    #drawing enemy in window
+-    def DrawEnemy(self, win):
+-        pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
+\ No newline at end of file
++
++    # drawing enemy in window
++    def draw_enemy(self, win):
++        """ Draws enemy circle"""
++        pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
+Index: Snaryad.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from Parametrs import win\r\nimport pygame\r\n\r\n#class for bullets\r\nclass snaryad():\r\n    def __init__(self, x, y, radius, color, facing):\r\n        self.x = x\r\n        self.y = y\r\n        self.radius = radius\r\n        self.color = color\r\n        self.facing = facing\r\n        self.vel = 8*facing\r\n    #drawing bullets in window\r\n    def draw(self, win):\r\n        pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Snaryad.py b/Snaryad.py
+--- a/Snaryad.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/Snaryad.py	(date 1622286767555)
+@@ -1,8 +1,8 @@
+ from Parametrs import win
+ import pygame
+ 
+-#class for bullets
+-class snaryad():
++class Snaryad():
++    """class for bullets"""
+     def __init__(self, x, y, radius, color, facing):
+         self.x = x
+         self.y = y
+@@ -10,6 +10,7 @@
+         self.color = color
+         self.facing = facing
+         self.vel = 8*facing
+-    #drawing bullets in window
++
+     def draw(self, win):
+-        pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
++        """drawing bullets on window """
++        pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
+\ No newline at end of file
+Index: Gamer.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\n\r\n\r\n\r\n#Class for gamer\r\nclass Gamer():\r\n    def __init__(self,XPos,YPos, LeftFacing, RightFacing, lastMove, GamerSpeed, InAirNow, HeightCount):\r\n        \r\n        self.XPos = XPos\r\n        self.YPos = YPos\r\n        self.LeftFacing = LeftFacing\r\n        self.Rightfacing = RightFacing\r\n        self.lastMove = lastMove\r\n        self.GamerSpeed = GamerSpeed\r\n        self.InAirNow = InAirNow\r\n        self.HeightCount = HeightCount\r\n\r\n        \r\nTrump=Gamer(50, 429, False, False, \"right\", 7, False, 10)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Gamer.py b/Gamer.py
+--- a/Gamer.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/Gamer.py	(date 1622286767516)
+@@ -1,19 +1,17 @@
+ import pygame
+ 
+-
+-
+-#Class for gamer
+-class Gamer():
+-    def __init__(self,XPos,YPos, LeftFacing, RightFacing, lastMove, GamerSpeed, InAirNow, HeightCount):
++class Gamer:
++    """Class for gamer """
++    def __init__(self, XPos, YPos, left_facing, right_facing, last_move, gamer_speed, in_air_now, height_count):
+         
+         self.XPos = XPos
+         self.YPos = YPos
+-        self.LeftFacing = LeftFacing
+-        self.Rightfacing = RightFacing
+-        self.lastMove = lastMove
+-        self.GamerSpeed = GamerSpeed
+-        self.InAirNow = InAirNow
+-        self.HeightCount = HeightCount
++        self.left_facing = left_facing
++        self.right_facing = right_facing
++        self.last_move = last_move
++        self.gamer_speed = gamer_speed
++        self.in_air_now = in_air_now
++        self.height_count = height_count
+ 
+         
+-Trump=Gamer(50, 429, False, False, "right", 7, False, 10)
+\ No newline at end of file
++Trump = Gamer(50, 429, False, False, "right", 7, False, 10)
+\ No newline at end of file
+Index: GamePlayFuns.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\npygame.init()\r\nfrom Gamer import *\r\nimport Parametrs as pr\r\nimport random\r\nfrom Images import *\r\nfrom Enemy import *\r\nfrom Snaryad import *\r\nfrom Sound import * \r\n\r\nclass FunRunner():\r\n    def __init__(self, flag):\r\n        self.flag = flag    \r\n    #Update window fun\r\n    def drawWindow(self):\r\n        \r\n        #WindowSet\r\n        win.blit(bg, (0, 0))\r\n        #pygame.draw.rect(win, (0,0,255), (x, y, width, height))- draws rectangle instead of player\r\n        #win.fill((0,0,0))-Paint the screen black\r\n        #Global var used in any part of code\r\n        \r\n        #Every sprite played in 5 shots. 30 shots aset as maximal\r\n        if pr.animCount + 1 > 30:\r\n            pr.animCount = 0\r\n        if Trump.LeftFacing:\r\n            win.blit(walkLeft[pr.animCount // 5], (Trump.XPos, Trump.YPos))\r\n            pr.animCount += 1\r\n        elif Trump.RightFacing:\r\n            win.blit(walkRight[pr.animCount // 5], (Trump.XPos, Trump.YPos))\r\n            pr.animCount += 1\r\n        else:\r\n            win.blit(playerStand, (Trump.XPos, Trump.YPos))\r\n        for bullet in pr.bullets:\r\n            bullet.draw(win)\r\n        for danger in pr.dangers:\r\n            danger.DrawEnemy(win)\r\n        self.print_text(\"TRUMP GAME!\", 100, 100)\r\n\r\n        ScoreSkill = (\"Points: \" + str(pr.PointCounter))\r\n\r\n        self.print_text(ScoreSkill, 100, 50)\r\n\r\n        LiveSkill = (\"Lives: \" + str(pr.LiveCounter))    \r\n        self.print_text(LiveSkill, 100, 20)\r\n\r\n        pygame.display.update()\r\n        \r\n        \r\n    #Function creates and deletes anemies   \r\n    def EnemySetting(self):\r\n        \r\n        \r\n        ChoiceAbility = [0,1,2,3,4,5,6,7,8,9,10]\r\n        EnemyRadius = random.choice([35, 39])\r\n        EnemySpeed = random.choice([1,2,3])\r\n        # adds an enemie\r\n        if random.choice(ChoiceAbility) == 9 and len(pr.dangers) < pr.MaxEnemies:\r\n            pr.dangers.append(enemy(0, 500- EnemyRadius, EnemyRadius, EnemySpeed, (255,100,180), 1))\r\n        elif random.choice(ChoiceAbility) == 10 and len(pr.dangers) < pr.MaxEnemies:\r\n            pr.dangers.append(enemy(500, 500-EnemyRadius, EnemyRadius, - EnemySpeed, (0,255,0), -1))\r\n        #moving and deleting enemies\r\n        if len(pr.dangers) >=1:  \r\n            for danger in pr.dangers: \r\n                if danger.x < 500 and danger.facing == 1:\r\n                    danger.x += danger.speed\r\n                elif danger.x > 0 and danger.facing == -1:\r\n                    danger.x += danger.speed\r\n                else:\r\n                    pr.dangers.pop(pr.dangers.index(danger))\r\n        # killing enemies            \r\n        if len(pr.bullets) >=1:           \r\n            for bullet in pr.bullets.copy():\r\n                for danger in pr.dangers.copy():\r\n                    if abs(bullet.x-danger.x) <5 and abs(bullet.y-danger.y) < 45:\r\n                        pr.PointCounter +=1\r\n                        #We check copies to avoid memory mistakes\r\n                        pr.dangers.pop(pr.dangers.index(danger))\r\n                        pygame.mixer.Sound.play(SS)\r\n                        bullet.x = 0\r\n                        bullet.y = 0\r\n                        pr.bullets.remove(bullet)\r\n                        \r\n            \r\n    #Fun for player Moving\r\n    def PlayerMoving(self):\r\n      \r\n        keys = pygame.key.get_pressed()\r\n        if keys[pygame.K_LEFT] and Trump.XPos > 5:\r\n            Trump.XPos -= Trump.GamerSpeed\r\n            Trump.LeftFacing = True\r\n            Trump.RightFacing = False\r\n            Trump.lastMove = \"left\"\r\n        elif keys[pygame.K_RIGHT] and Trump.XPos < 500-5-pr.width:\r\n            Trump.XPos += Trump.GamerSpeed\r\n            Trump.LeftFacing = False\r\n            Trump.RightFacing = True\r\n            Trump.lastMove = \"right\"\r\n        else:\r\n            Trump.LeftFacing = False\r\n            Trump.RightFacing = False\r\n            pr.animCount = 0\r\n\r\n    #Fun for jump\r\n    def PlayerJumping(self):\r\n        keys = pygame.key.get_pressed()\r\n        if not(Trump.InAirNow):\r\n        \r\n            if keys[pygame.K_SPACE]:\r\n                Trump.InAirNow = True \r\n        else:\r\n            \r\n            if Trump.HeightCount >=-10:\r\n                if Trump.HeightCount < 0:\r\n                    Trump.YPos += (Trump.HeightCount ** 2) / 2\r\n                else:\r\n                    Trump.YPos -= (Trump.HeightCount ** 2) / 2\r\n                Trump.HeightCount -= 1 \r\n            else:\r\n                Trump.InAirNow = False\r\n                Trump.HeightCount = 10\r\n        \r\n    #Fun for bullet    \r\n    def BulletMove(self):\r\n        \r\n        for bullet in pr.bullets.copy():\r\n            if bullet.x < 500 and bullet.x > 0:\r\n                bullet.x += bullet.vel\r\n            else:\r\n                pr.bullets.pop(pr.bullets.index(bullet))\r\n        keys = pygame.key.get_pressed()\r\n        if keys[pygame.K_f]:\r\n            if Trump.lastMove == \"right\":\r\n                facing = 1\r\n            else:\r\n                facing = -1\r\n            if len(pr.bullets) < pr.MaxBullet:\r\n                pr.bullets.append(snaryad(round(Trump.XPos + pr.width // 2), round(Trump.YPos + pr.height // 2), 5,(255,0,0), facing))\r\n\r\n\r\n    #Fun for Losing\r\n    def Losing(self):\r\n        \r\n        \r\n        \r\n        for danger in pr.dangers:\r\n            if abs(Trump.XPos-danger.x) < danger.radius+5  and abs(Trump.YPos-danger.y) < danger.radius * 2:\r\n                pr.LiveCounter -= 1\r\n                if pr.LiveCounter <=0:\r\n                    pr.run = False\r\n                    quit()\r\n\r\n    #Function for printing text on the screen           \r\n    def print_text(self, message, x, y, font_color = (0,0,0), font_type = 'BantyBold.ttf', font_size = 30):\r\n        font_type=pygame.font.Font(font_type, font_size)\r\n        text=font_type.render(message, True, font_color)\r\n        win.blit(text, (x,y))\r\n        \r\n\r\n\r\n\r\n    #Function for pause\r\n    def pause(self):\r\n        \r\n        keys = pygame.key.get_pressed()\r\n        paused = True\r\n        if keys[pygame.K_w]:\r\n            while paused:\r\n                for event in pygame.event.get():\r\n                    if event.type == pygame.QUIT:\r\n                        pr.run = False\r\n                        quit()\r\n\r\n\r\n\r\n                self.print_text('pause. Press S to continue', 150, 150)\r\n                keys = pygame.key.get_pressed()\r\n                if keys[pygame.K_s]:\r\n                    paused = False\r\n                pygame.display.update()\r\n                clock.tick(15)\r\n    #Adds Player's health            \r\n    \r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/GamePlayFuns.py b/GamePlayFuns.py
+--- a/GamePlayFuns.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/GamePlayFuns.py	(date 1622287019055)
+@@ -8,25 +8,27 @@
+ from Snaryad import *
+ from Sound import * 
+ 
+-class FunRunner():
++class FunRunner:
++    """Consists of gameplay funs"""
+     def __init__(self, flag):
+         self.flag = flag    
+-    #Update window fun
+-    def drawWindow(self):
+-        
+-        #WindowSet
++    # Update window fun
++
++    def draw_window(self):
++        """Creates main pygame window"""
++        # WindowSet
+         win.blit(bg, (0, 0))
+-        #pygame.draw.rect(win, (0,0,255), (x, y, width, height))- draws rectangle instead of player
+-        #win.fill((0,0,0))-Paint the screen black
+-        #Global var used in any part of code
++        # pygame.draw.rect(win, (0,0,255), (x, y, width, height))- draws rectangle instead of player
++        # win.fill((0,0,0))-Paint the screen black
++        # Global var used in any part of code
+         
+-        #Every sprite played in 5 shots. 30 shots aset as maximal
++        # Every sprite played in 5 shots. 30 shots aset as maximal
+         if pr.animCount + 1 > 30:
+             pr.animCount = 0
+-        if Trump.LeftFacing:
++        if Trump.left_facing:
+             win.blit(walkLeft[pr.animCount // 5], (Trump.XPos, Trump.YPos))
+             pr.animCount += 1
+-        elif Trump.RightFacing:
++        elif Trump.right_facing:
+             win.blit(walkRight[pr.animCount // 5], (Trump.XPos, Trump.YPos))
+             pr.animCount += 1
+         else:
+@@ -34,7 +36,7 @@
+         for bullet in pr.bullets:
+             bullet.draw(win)
+         for danger in pr.dangers:
+-            danger.DrawEnemy(win)
++            danger.draw_enemy(win)
+         self.print_text("TRUMP GAME!", 100, 100)
+ 
+         ScoreSkill = ("Points: " + str(pr.PointCounter))
+@@ -45,21 +47,19 @@
+         self.print_text(LiveSkill, 100, 20)
+ 
+         pygame.display.update()
+-        
+-        
+-    #Function creates and deletes anemies   
+-    def EnemySetting(self):
+-        
+-        
++
++    def enemy_setting(self):
++        """ Function creates and deletes enemies """
++
+         ChoiceAbility = [0,1,2,3,4,5,6,7,8,9,10]
+         EnemyRadius = random.choice([35, 39])
+-        EnemySpeed = random.choice([1,2,3])
++        EnemySpeed = random.choice([2,3,4])
+         # adds an enemie
+         if random.choice(ChoiceAbility) == 9 and len(pr.dangers) < pr.MaxEnemies:
+-            pr.dangers.append(enemy(0, 500- EnemyRadius, EnemyRadius, EnemySpeed, (255,100,180), 1))
++            pr.dangers.append(Enemy(0, 500 - EnemyRadius, EnemyRadius, EnemySpeed, (255, 100, 180), 1))
+         elif random.choice(ChoiceAbility) == 10 and len(pr.dangers) < pr.MaxEnemies:
+-            pr.dangers.append(enemy(500, 500-EnemyRadius, EnemyRadius, - EnemySpeed, (0,255,0), -1))
+-        #moving and deleting enemies
++            pr.dangers.append(Enemy(500, 500 - EnemyRadius, EnemyRadius, - EnemySpeed, (0, 255, 0), -1))
++        # moving and deleting enemies
+         if len(pr.dangers) >=1:  
+             for danger in pr.dangers: 
+                 if danger.x < 500 and danger.facing == 1:
+@@ -74,54 +74,53 @@
+                 for danger in pr.dangers.copy():
+                     if abs(bullet.x-danger.x) <5 and abs(bullet.y-danger.y) < 45:
+                         pr.PointCounter +=1
+-                        #We check copies to avoid memory mistakes
++                        # We check copies to avoid memory mistakes
+                         pr.dangers.pop(pr.dangers.index(danger))
+                         pygame.mixer.Sound.play(SS)
+                         bullet.x = 0
+                         bullet.y = 0
+                         pr.bullets.remove(bullet)
+-                        
+-            
+-    #Fun for player Moving
+-    def PlayerMoving(self):
++
++    def player_moving(self):
++        """Fun for player Moving"""
+       
+         keys = pygame.key.get_pressed()
+         if keys[pygame.K_LEFT] and Trump.XPos > 5:
+-            Trump.XPos -= Trump.GamerSpeed
+-            Trump.LeftFacing = True
+-            Trump.RightFacing = False
+-            Trump.lastMove = "left"
++            Trump.XPos -= Trump.gamer_speed
++            Trump.left_facing = True
++            Trump.right_facing = False
++            Trump.last_move = "left"
+         elif keys[pygame.K_RIGHT] and Trump.XPos < 500-5-pr.width:
+-            Trump.XPos += Trump.GamerSpeed
+-            Trump.LeftFacing = False
+-            Trump.RightFacing = True
+-            Trump.lastMove = "right"
++            Trump.XPos += Trump.gamer_speed
++            Trump.left_facing = False
++            Trump.right_facing = True
++            Trump.last_move = "right"
+         else:
+-            Trump.LeftFacing = False
+-            Trump.RightFacing = False
++            Trump.left_facing = False
++            Trump.right_facing = False
+             pr.animCount = 0
+ 
+-    #Fun for jump
+-    def PlayerJumping(self):
++    def player_jumping(self):
++        """ Fun for jump(paraboloid)"""
+         keys = pygame.key.get_pressed()
+-        if not(Trump.InAirNow):
++        if not Trump.in_air_now:
+         
+             if keys[pygame.K_SPACE]:
+-                Trump.InAirNow = True 
++                Trump.in_air_now = True
+         else:
+             
+-            if Trump.HeightCount >=-10:
+-                if Trump.HeightCount < 0:
+-                    Trump.YPos += (Trump.HeightCount ** 2) / 2
++            if Trump.height_count >=-10:
++                if Trump.height_count < 0:
++                    Trump.YPos += (Trump.height_count ** 2) / 2
+                 else:
+-                    Trump.YPos -= (Trump.HeightCount ** 2) / 2
+-                Trump.HeightCount -= 1 
++                    Trump.YPos -= (Trump.height_count ** 2) / 2
++                Trump.height_count -= 1
+             else:
+-                Trump.InAirNow = False
+-                Trump.HeightCount = 10
+-        
+-    #Fun for bullet    
+-    def BulletMove(self):
++                Trump.in_air_now = False
++                Trump.height_count = 10
++
++    def bullet_move(self):
++        """Fun for bullet moving """
+         
+         for bullet in pr.bullets.copy():
+             if bullet.x < 500 and bullet.x > 0:
+@@ -130,19 +129,16 @@
+                 pr.bullets.pop(pr.bullets.index(bullet))
+         keys = pygame.key.get_pressed()
+         if keys[pygame.K_f]:
+-            if Trump.lastMove == "right":
++            if Trump.last_move == "right":
+                 facing = 1
+             else:
+                 facing = -1
+             if len(pr.bullets) < pr.MaxBullet:
+-                pr.bullets.append(snaryad(round(Trump.XPos + pr.width // 2), round(Trump.YPos + pr.height // 2), 5,(255,0,0), facing))
+-
++                pr.bullets.append(Snaryad(round(Trump.XPos + pr.width // 2), round(Trump.YPos + pr.height // 2), 5, (255, 0, 0), facing))
+ 
+-    #Fun for Losing
+-    def Losing(self):
+-        
+-        
+-        
++    def losing(self):
++        """Fun for Losing"""
++
+         for danger in pr.dangers:
+             if abs(Trump.XPos-danger.x) < danger.radius+5  and abs(Trump.YPos-danger.y) < danger.radius * 2:
+                 pr.LiveCounter -= 1
+@@ -150,17 +146,14 @@
+                     pr.run = False
+                     quit()
+ 
+-    #Function for printing text on the screen           
+     def print_text(self, message, x, y, font_color = (0,0,0), font_type = 'BantyBold.ttf', font_size = 30):
++        """Function for printing text on the screen """
+         font_type=pygame.font.Font(font_type, font_size)
+         text=font_type.render(message, True, font_color)
+         win.blit(text, (x,y))
+-        
+ 
+-
+-
+-    #Function for pause
+     def pause(self):
++        """Function for pause(stops game) """
+         
+         keys = pygame.key.get_pressed()
+         paused = True
+@@ -171,15 +164,13 @@
+                         pr.run = False
+                         quit()
+ 
+-
+-
+                 self.print_text('pause. Press S to continue', 150, 150)
+                 keys = pygame.key.get_pressed()
+                 if keys[pygame.K_s]:
+                     paused = False
+                 pygame.display.update()
+-                clock.tick(15)
+-    #Adds Player's health            
++                pr.clock.tick(15)
++
+     
+ 
+ 
+Index: ButtonClass.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from Sound import *\r\nimport Parametrs as pr\r\n\r\n\r\n\r\n\r\nclass Button:\r\n    \r\n    def __init__(self, width, height):\r\n        \r\n        self.width = width\r\n        self.height = height\r\n        self.inactive_color = (200,190,140)\r\n        self.active_color = (180,255,100)\r\n    def draw(self, x, y, message):\r\n        global LiveCounter\r\n       \r\n        #Gets mouse's position\r\n        mouse = pygame.mouse.get_pos()\r\n        click = pygame.mouse.get_pressed()\r\n        if x < mouse[0] < x + self.width:\r\n            if y < mouse[1] < y + self.height:\r\n                pygame.draw.rect(pr.win, self.active_color, (x, y, self.width, self.height))\r\n                pygame.display.update()\r\n                if click[0] == 1:\r\n                    pygame.mixer.Sound.play(BS)\r\n                    pygame.time.delay(300)\r\n                    pr.LiveCounter +=1\r\n        else:\r\n            pygame.draw.rect(pr.win, self.inactive_color, (x, y, self.width, self.height ))\r\n            pygame.display.update()\r\n    def print_but_mes(self, x, y, font_color = (125, 0, 155), font_type = 'BantyBold.ttf', font_size = 30):\r\n        font_type=pygame.font.Font(font_type, font_size)\r\n        text=font_type.render(\"cheat\", True, font_color)\r\n        pr.win.blit(text, (x,y)) \r\n        pygame.display.update()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ButtonClass.py b/ButtonClass.py
+--- a/ButtonClass.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/ButtonClass.py	(date 1622286267556)
+@@ -2,20 +2,21 @@
+ import Parametrs as pr
+ 
+ 
+-
+-
+ class Button:
+-    
++    """Cheat Button Class"""
++
+     def __init__(self, width, height):
+-        
++
+         self.width = width
+         self.height = height
+-        self.inactive_color = (200,190,140)
+-        self.active_color = (180,255,100)
++        self.inactive_color = (200, 190, 140)
++        self.active_color = (180, 255, 100)
++
+     def draw(self, x, y, message):
++        """Draws the button"""
+         global LiveCounter
+-       
+-        #Gets mouse's position
++
++        # Gets mouse's position
+         mouse = pygame.mouse.get_pos()
+         click = pygame.mouse.get_pressed()
+         if x < mouse[0] < x + self.width:
+@@ -25,12 +26,14 @@
+                 if click[0] == 1:
+                     pygame.mixer.Sound.play(BS)
+                     pygame.time.delay(300)
+-                    pr.LiveCounter +=1
++                    pr.LiveCounter += 1
+         else:
+-            pygame.draw.rect(pr.win, self.inactive_color, (x, y, self.width, self.height ))
++            pygame.draw.rect(pr.win, self.inactive_color, (x, y, self.width, self.height))
+             pygame.display.update()
+-    def print_but_mes(self, x, y, font_color = (125, 0, 155), font_type = 'BantyBold.ttf', font_size = 30):
+-        font_type=pygame.font.Font(font_type, font_size)
+-        text=font_type.render("cheat", True, font_color)
+-        pr.win.blit(text, (x,y)) 
+-        pygame.display.update()
+\ No newline at end of file
++
++    def print_but_mes(self, x, y, font_color=(125, 0, 155), font_type='BantyBold.ttf', font_size=30):
++        """Prints the button message"""
++        font_type = pygame.font.Font(font_type, font_size)
++        text = font_type.render("cheat", True, font_color)
++        pr.win.blit(text, (x, y))
++        pygame.display.update()
+Index: Parametrs.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\nimport pygame\r\npygame.init()\r\n#Setting the display\r\nwin =pygame.display.set_mode((500, 500))\r\npygame.display.set_caption(\"Cubes game\")\r\n\r\n#constants \r\nclock = pygame.time.Clock()\r\n\r\n#player's size and speed\r\nwidth = 60\r\nheight = 71\r\n\r\n#Lives and kills counter\r\nPointCounter = 0\r\nLiveCounter = 100\r\n\r\nanimCount = 0\r\n\r\n\r\nrun = True\r\n#Maximum allowed bullets and enemies\r\nMaxBullet = 1\r\nMaxEnemies = 4\r\n\r\n\r\n#arrays for bullets and enemies\r\nbullets = []\r\ndangers = []\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Parametrs.py b/Parametrs.py
+--- a/Parametrs.py	(revision a403aaa8e9e959315edf536abcb619298ec33ace)
++++ b/Parametrs.py	(date 1622286767572)
+@@ -1,18 +1,18 @@
+ 
+ import pygame
+ pygame.init()
+-#Setting the display
+-win =pygame.display.set_mode((500, 500))
++# Setting the display
++win = pygame.display.set_mode((500, 500))
+ pygame.display.set_caption("Cubes game")
+ 
+-#constants 
++# constants
+ clock = pygame.time.Clock()
+ 
+-#player's size and speed
++# player's size and speed
+ width = 60
+ height = 71
+ 
+-#Lives and kills counter
++# Lives and kills counter
+ PointCounter = 0
+ LiveCounter = 100
+ 
+@@ -20,12 +20,12 @@
+ 
+ 
+ run = True
+-#Maximum allowed bullets and enemies
++# Maximum allowed bullets and enemies
+ MaxBullet = 1
+ MaxEnemies = 4
+ 
+ 
+-#arrays for bullets and enemies
++# arrays for bullets and enemies
+ bullets = []
+ dangers = []
+ 
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1622286268984)
++++ b/.idea/.gitignore	(date 1622286268984)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1622286268885)
++++ b/.idea/vcs.xml	(date 1622286268885)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+new file mode 100644
+--- /dev/null	(date 1622286268861)
++++ b/.idea/inspectionProfiles/profiles_settings.xml	(date 1622286268861)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1622286268833)
++++ b/.idea/misc.xml	(date 1622286268833)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9" project-jdk-type="Python SDK" />
++</project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1622286268774)
++++ b/.idea/modules.xml	(date 1622286268774)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/Trump-Game.iml" filepath="$PROJECT_DIR$/.idea/Trump-Game.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/Trump-Game.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/Trump-Game.iml b/.idea/Trump-Game.iml
+new file mode 100644
+--- /dev/null	(date 1622286268760)
++++ b/.idea/Trump-Game.iml	(date 1622286268760)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1622286268658)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1622286268658)
+@@ -0,0 +1,13 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
++      <option name="ignoredErrors">
++        <list>
++          <option value="E302" />
++          <option value="W292" />
++        </list>
++      </option>
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file
